@@ -12,8 +12,10 @@ from app import app
 # https://dash.plotly.com/datatable/reference
 # Satellites
 instrument_map = dict(
+                AMAZONIA1 = ['WFI'],
 		CBERS4A = ['MUX','WFI','WPM'],
 		CBERS4 = ['MUX','AWFI','PAN5M','PAN10M'],
+		CBERS2B = ['CCD','WFI','HRC'],
 		LANDSAT1 = ['MSS'],
 		LANDSAT2 = ['MSS'],
 		LANDSAT3 = ['MSS'],
@@ -27,6 +29,7 @@ band_map = dict(
 		WPM = ['nir','red','green','blue','pan'],
 		PAN10M = ['nir','red','green'],
 		PAN5M = ['pan'],
+		CCD = ['nir'],
 		MSS = ['nir'],
 		TM = ['nir'],
 		ETM = ['nir'],
@@ -37,7 +40,7 @@ def get_start_date():
 	sql = 'SELECT MIN(launch) as start_date FROM Activities'
 	result = db_fetchone(sql,db='operation')
 	print('get_start_date - result',result)
-	if result is not None:
+	if result is not None and result[0] is not None:
 		start_date = result[0].strftime("%Y-%m-%d")
 	else:
 		start_date = dt.now().strftime("%Y-%m-%d")
@@ -362,7 +365,7 @@ def update_graph_scatter(start_date,input_data):
 
 # Fill the data table
 	sql = "SELECT task,dataset,status,count(*) as amount FROM Activities WHERE launch >= '{}' GROUP BY task,dataset,status ORDER BY task,dataset".format(start_date)
-	sql = "SELECT task,dataset,status,count(*) as amount,MAX(elapsed) as maxe,AVG(elapsed) as avg ,MIN(elapsed) as mine FROM Activities WHERE launch >= '{}' GROUP BY task,dataset,status ORDER BY task".format(start_date)
+	sql = "SELECT task,dataset,status,count(*) as amount,MAX(elapsed) as maxe,AVG(elapsed) as avg ,MIN(elapsed) as mine FROM Activities WHERE launch >= '{}' GROUP BY task,dataset,status ORDER BY dataset,task".format(start_date)
 
 	#print('update_graph_scatter - sql {}'.format(sql))
 
