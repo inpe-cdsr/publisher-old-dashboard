@@ -223,7 +223,7 @@ def update_tasks_graph(n_clicks,start_date,end_date,host,kinds,pdate,inst,status
 		if kind == 'd2g' or kind == 'g2q'or kind == 'd2d':
 # CBERS_4_AWFI_DRD_2020_07_04.02_40_45_CB11 d2g
 			parts = result['info'].split('_')
-			if parts[0].find('CBERS') == -1: continue
+#			if parts[0].find('CBERS') == -1: continue
 			sat = parts[0]+parts[1]
 			inst = parts[2]
 			calendardate = parts[4]+parts[5]+parts[6]+parts[7]+parts[8]

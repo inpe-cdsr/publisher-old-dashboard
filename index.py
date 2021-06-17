@@ -10,6 +10,7 @@ from app import app
 from operation import operation
 from performance import performance
 from orbiting import orbiting
+from positioning import positioning
 
 import logging
 
@@ -34,6 +35,8 @@ options = html.Div([
     dcc.Link('Go to Performance', href='/publisher-dashboard/performance'),
     html.Div(id='orbiting-display-value'),
     dcc.Link('Go to Orbiting', href='/publisher-dashboard/orbiting'),
+    html.Div(id='positioning-display-value'),
+    dcc.Link('Go to Positioning', href='/publisher-dashboard/positioning'),
 
 ])
 
@@ -46,6 +49,8 @@ def display_page(pathname):
 		return performance.layout
 	elif pathname == '/publisher-dashboard/orbiting':
 		return orbiting.layout
+	elif pathname == '/publisher-dashboard/positioning':
+		return positioning.layout
 	else:
 		return options
 
